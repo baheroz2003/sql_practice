@@ -39,6 +39,18 @@ ORDER BY weight_group DESC
   JOIN doctors d ON d.doctor_id=a.attending_doctor_id
 WHERE a.diagnosis='Epilepsy' AND 
 d.first_name='Lisa'
+--q45 all patients who have gone through admission,can see their medical documents on our site
+--those patients are given  a temporary password after their first admission .Show the patient
+---id and temp password 
+  --the password must be the following table in order 
+  --patient_id 
+  ---the numerical length of the patient's last_name 
+  ----year of patient's birth date
+  SELECT patients.patient_id,CONCAT(patients.patient_id,LEN(patients.last_name),YEAR(patiens.birth_date)) AS temp_password
+  FROM patients
+  JOIN admissions ON patients.patient_id=admissions.patient_id
+  GROUP BY patients.patient_id
+  
   
   
   
