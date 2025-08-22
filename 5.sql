@@ -50,6 +50,35 @@ d.first_name='Lisa'
   FROM patients
   JOIN admissions ON patients.patient_id=admissions.patient_id
   GROUP BY patients.patient_id
+---q46 each admission costs 50dollars for patients without insurance, and 10dollar for patients
+---with insurance.All patients with an event patient _id have insurance.
+--give each patient a "yes" if they have insurance and a "No" if they do not have insurance.
+--Add up the admission_total cost for each has_insurance group
+  SELECT 
+    (CASE WHEN patients.patient_id%2= 0 THEN 'Yes'
+    ELSE 'No' END)
+    AS has_insurance,
+    SUM(CASE WHEN patients.paient_id%2 = 0 THEN 10 ELSE 50 END)
+    AS cost_after_insurance
+  FROM patients
+  JOIN admissions 
+  ON patients.patient_id=admissions.paient_id
+  GROUP BY has_insurance
+---q47 show the provinces tha has more patients identified as 'M' than 'F' must only show full 
+  --province_name 
+  SELECT pr.province_name 
+  FROM patients  p
+  JOIN province_names pr 
+  ON p.province_id=pr.province_id
+  GROUP BY pr.province_name
+  HAVING COUNT(CASE WHEN p.gender='M' THEN 1 ELSE 0)>
+  COUNT(CASE WHEN p.gender='F' THEN 1 ELSE 0)
+  
+  
+  
+  
+    
+  
   
   
   
