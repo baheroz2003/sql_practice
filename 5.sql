@@ -73,6 +73,45 @@ d.first_name='Lisa'
   GROUP BY pr.province_name
   HAVING COUNT(CASE WHEN p.gender='M' THEN 1 ELSE 0)>
   COUNT(CASE WHEN p.gender='F' THEN 1 ELSE 0)
+  --q48 we are looking for a specific patient.pull all columns for the patient who matches
+  --the following criteria:
+  --first_name contains as an 'r' after the first two letters
+  --identifies their gender as 'F'
+  --born in february,may or december
+  --their weight would be between 60kg and 80kg
+  --their patient_id is an odd number 
+  --they are from the city 'kingston'
+  SELECT *FROM 
+  patients WHERE first_name LIKE '__r%' AND
+  gender='F' AND MONTH(birth_date) IN (2,5,12) AND WEIGHT BETWEEN 60 AND 80
+  AND patient_id %2 !=0 AND city= 'Kingston'
+  --q49 show the percent of patients that have 'M' as their gender.Round the answer to the 
+  --nearest hundreth number and in percent form
+  SELECT
+  CONCAT(
+  ROUND(
+  (SELECT COUNT(*) FROM patients 
+  WHERE gender= 'M')/CAST(COUNT(*) AS float),4)*100,'%)
+  AS male_percent FROM patients
+  -- q50 for each day display the total amount of admissions on that day.Display the amount
+  changed from the previous one 
+  lag function use kro jis se prev row milega 
+  over bhi use hoga 
+  SELECT admission_date,
+  COUNT(admission_date) AS admission_day,
+  COUNT(admission_date)-LAG(COUNT(admission_date))
+  OVER(ORDER BY admission_date) AS change
+  FROM admissions
+  GROUP BY admission_date
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
   
   
