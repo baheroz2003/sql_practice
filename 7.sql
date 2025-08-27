@@ -23,7 +23,24 @@ FROM customers
 UNION 
 SELECT city,company_name,contact_name,'suppliers' AS relationship
 FROM suppliers
-
+--65 show the total amount of orders for each year/month
+SELECT YEAR(order_date) AS order_year,
+MONTH(order_date) AS order_month,COUNT(*)
+FROM orders
+GROUP BY YEAR(order_date),MONTH(order_date)
+--66 show the employee's first_name,and last_name,a num orders column with a count of the orders
+--taken, and a column called 'shipped' that displays "on time" if the order shipped "late" if 
+--order shipped late ,not shipped if shipped_date is null
+--order by employee last_name,then by first_name,and then descending by no of orders
+SELECT e.first_name,e.last_name,COUNT(o.order_id) AS num_orders,
+(
+      CASE WHEN o.shipped_date <= required_date THEN 'On Time'
+      WHEN o.shipped_date > o.required_date THEN 'Late'
+      WHEN o.shipped_date IS NULL THEN 'Not Shipped' END
+) AS shipped
+FROM employees e JOIN orders o ON e.employee_id=o.employee_id
+GROUP BY e.first_name,e.last_name,shipped
+ORDER BY e.last_name,e.first_name,num_orders DESC
 
 
 
