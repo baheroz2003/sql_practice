@@ -41,6 +41,20 @@ SELECT e.first_name,e.last_name,COUNT(o.order_id) AS num_orders,
 FROM employees e JOIN orders o ON e.employee_id=o.employee_id
 GROUP BY e.first_name,e.last_name,shipped
 ORDER BY e.last_name,e.first_name,num_orders DESC
+--67 Show how much money the company lost due to giving discounts each year,order the years from 
+--from most recent to least recent.Round to 2 decimal places
+SELECT YEAR(o.order_date) AS order_year,
+ROUND(SUM(p.unit_price*od.quantity*od.discount),2) AS discount
+FROM order o JOIN
+order_details od ON o.order_id=od.order_id
+JOIN products p ON od.product_id=p.product_id
+GROUP BY YEAR(o.order_date)
+ORDER BY order_year DESC
+
+
+
+
+
 
 
 
