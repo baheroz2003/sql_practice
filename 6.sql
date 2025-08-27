@@ -34,6 +34,26 @@ WHERE shipped_date >required_date
 SELECT order_id
 FROM orders
 WHERE order_id%2=0
+--58 show the city,company_name,contact_name of all customers from cities which contains the 
+--letter 'L' in the city name,sorted by contact_name
+SELECT city,company_name,contact_name
+FROM customers
+WHERE city LIKE '%L%'
+ORDER BY contact_name
+--59 show  the comapny_name,contact_name,fax number of all customers that has a fax number
+--of all customers that has a fax number(not null)
+SELECT company_name,contact_name,fax
+FROM customers 
+WHERE fax IS NOT null
+--60 show the first_name,last_name .hire_date of the most recently hired employee
+SELECT first_name,last_name,hire_date
+FROM employees 
+ORDER BY hire_date DESC
+LIMIT 1
+
+
+
+
 
 
 
